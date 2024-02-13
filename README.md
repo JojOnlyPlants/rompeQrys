@@ -2,7 +2,7 @@
 ## Ingenieria de Software
 ### Profesores: Christopher TO DO: NOMBRES 
 ---
-###Traido en tecnicolor cortesia de:
+### **Traido en tecnicolor cortesia de: **
 * Haans
 *  Oscar 
 * Luis 
