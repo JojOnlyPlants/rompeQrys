@@ -3,24 +3,29 @@
 {% block titulo%}Inicio{% endblock%}
 
 {% block contenido%}
-    <div class="row align-items-md-stretch">
-        <div class="col-md-6">
-            <div
-                class="h-100 p-5 text-black  border rounded-3"
-            >
-                <h2>Bienvenidos a la red social</h2>
-                <p>
-                    Empieza a compartir tus experiencias con tus amigos
-                </p>
-                <a
-                    class="btn btn-outline-primary"
-                    type="button"
-                    href="{%url 'bandeja_solicitudes'%}"
-                >
-                    Bandeja de Solicitudes
-                </a>
+<h1>Inicio</h1>
+
+{% for publicacion in publicaciones %}
+        <div class="card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <img
+                        src="{{publicacion.cuenta.foto_perfil.url}}"
+                        class="img-fluid rounded-top"
+                        alt=""
+                    />
+                    <h2>{{publicacion.cuenta.nickname}}</h2>
+                    <picture>
+                        <img
+                            src="{{publicacion.imagen.url}}"
+                            class="img-fluid"
+                            alt="image desc"
+                        />
+                    </picture>
+                    <p>{{publicacion.texto}}</p>    
+                </blockquote>
             </div>
         </div>
-    </div>
+{% endfor %}
     
 {% endblock%}

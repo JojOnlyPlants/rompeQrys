@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block titulo %} Notificaciones {% endblock %}
+
+{% block contenido %}
+<h1>Bandeja de Notificaciones</h1>
+<div class="card">
+    <div class="card-header">Bandeja de Notificaciones.</div>
+    <div class="card-body">
+        <h4 class="card-title">Notificaciones</h4>
+        <div
+            class="table-responsive"
+        >
+            <table
+                class="table table-primary"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">Amigo</th>
+                        <th scope="col">Post</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td>nickname</td>
+                        <td>texto del post</td>
+                        <td><a class="btn btn-info btn-sm " href="#" role="button" method="post"> ver </a> 
+                            | 
+                            <a class="btn btn-danger btn-sm " href="#" role="button" method="post" > descartar </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>
+    
+    
+
+{% endblock %}
