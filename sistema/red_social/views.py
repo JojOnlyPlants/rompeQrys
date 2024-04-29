@@ -7,7 +7,8 @@ def inicio(request):
     return render(request,"paginas/inicio.html",{'publicaciones':publicaciones})
 
 def bandeja_solicitudes(request):
-    return render(request, "paginas/bandeja_solicitudes.html")
+    solicitudes = Solicitud.objects.all()
+    return render(request, "paginas/bandeja_solicitudes.html",{'solicitudes':solicitudes})
 
 def perfil(request):
     return render(request, "paginas/perfil.html")
