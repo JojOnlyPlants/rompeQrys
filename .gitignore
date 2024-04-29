@@ -2,6 +2,10 @@
 # Entorno Virtual de Python
 **/venv
 
+**/sistema/media
+**/sistema/red_social/migrations
+
+
 # Django
 *.egg-info
 *.pot
