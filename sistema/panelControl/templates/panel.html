@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block titulo %} Panel {% endblock %}
+{% block contenido %}  
+
+<h1>Panel de control</h1>
+
+<br>
+
+<h2> Pendiente: hacer pagina de exito </h2>
+
+<br>
+
+<div class="container">
+    <a href="{% url 'nombre' %}" class="btn btn-info" role="button">Cambiar nombre</a>
+</div>
+
+<br>
+
+<div class="container">
+    <a href="{% url 'contrasena' %}" class="btn btn-info" role="button">Cambiar contrasena</a>
+</div>
+
+<br>
+
+<div class="container">
+    <a href="{% url 'correo' %}" class="btn btn-info" role="button">Cambiar correo</a>
+</div>
+
+<br>
+
+<div class="container">
+    <a href="{% url 'foto' %}" class="btn btn-info" role="button">Cambiar foto</a>
+</div>
+
+{% endblock %}

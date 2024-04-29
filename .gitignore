@@ -1,6 +1,10 @@
 
 # Entorno Virtual de Python
 **/venv
+.venv
+
+#misc files
+HipolokoDB.sh
 
 **/sistema/media
 **/sistema/red_social/migrations

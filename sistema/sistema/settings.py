@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'red_social'
+    'red_social',
+    'panelControl'
 ]
 
 MIDDLEWARE = [

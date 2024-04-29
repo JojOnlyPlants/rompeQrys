@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block titulo %} Cambiar nombre {% endblock %}
+{% block contenido %}  
+
+<a
+    name=""
+    id=""
+    class="btn btn-success"
+    href="{% url 'panel' %}"
+    role="button"
+    >Regresar al panel de control</a
+>
+
+<br>
+
+<div class="card">
+    <div class="card-header"><h1>Cambiar nombre:</h1></div>
+    <div class="card-body">
+        <h4 class="card-title">Nuevo nombre:</h4>
+        {% include 'form.html' %}
+    </div>
+    <div class="card-footer text-muted"></div>
+</div>
+
+{% endblock %}
