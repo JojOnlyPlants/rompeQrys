@@ -13,15 +13,14 @@
 
 <br>
 
-<div class="card">
-    <div class="card-header"><h1>Cambiar contrasena:</h1></div>
-    <div class="card-body">
-        <h4 class="card-title">Nueva contrasena:</h4>
-        {% include 'form.html' %}
-        <h4 class="card-title">Confirmar contrasena:</h4>
-        {% include 'form.html' %}
-    </div>
-    <div class="card-footer text-muted"></div>
-</div>
+<h2>Change Password</h2>
+  <form method="post">
+    {% csrf_token %}
+    <label for="password">New Password:</label><br>
+    <input type="password" id="password" name="password"><br>
+    <label for="password_confirmation">Confirm New Password:</label><br>
+    <input type="password" id="password_confirmation" name="password_confirmation"><br>
+    <input type="submit" value="Submit">
+  </form>
 
 {% endblock %}

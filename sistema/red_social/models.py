@@ -26,21 +26,22 @@ class Publicacion(models.Model):
         return self.texto
     
 class Usuario(models.Model):
-    nombre = models.CharField(max_length=50,verbose_name='Nombre')
-    apellido_paterno = models.CharField(max_length=50,verbose_name='Apellido paterno')
-    apellido_materno = models.CharField(max_length=50,verbose_name='Apellido materno')
+    id = models.AutoField(primary_key=True, default=0, verbose_name='ID')
+    nombre = models.CharField(max_length=50, verbose_name='Nombre')
+    apellido_paterno = models.CharField(max_length=50, verbose_name='Apellido paterno')
+    apellido_materno = models.CharField(max_length=50, verbose_name='Apellido materno')
     fecha_nacimiento = models.DateField(verbose_name='Fecha de nacimiento')
-    genero = models.CharField(max_length=15,verbose_name='Género')
-    email = models.EmailField(primary_key=True,verbose_name='Email')
-    contrasena = models.CharField(max_length=50,verbose_name='Contraseña')
-    es_administrador = models.BooleanField(default=False,verbose_name='Es administrador')
-    cuenta = models.ForeignKey(Cuenta,on_delete=models.CASCADE,verbose_name='Cuenta')
+    genero = models.CharField(max_length=15, verbose_name='Género')
+    email = models.EmailField(verbose_name='Email')
+    contrasena = models.CharField(max_length=50, verbose_name='Contraseña')
+    es_administrador = models.BooleanField(default=False, verbose_name='Es administrador')
+    cuenta = models.ForeignKey(Cuenta, on_delete=models.CASCADE, verbose_name='Cuenta')
 
     class Meta:
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
         ordering = ['cuenta']
-    
+
     def __str__(self):
         return self.cuenta.nickname
     

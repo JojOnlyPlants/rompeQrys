@@ -2,34 +2,42 @@
 {% block titulo %} Panel {% endblock %}
 {% block contenido %}  
 
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
 <h1>Panel de control</h1>
 
 <br>
 
-<h2> Pendiente: hacer pagina de exito </h2>
+<h3> Pendiente: hacer pagina de exito </h3>
 
 <br>
 
 <div class="container">
-    <a href="{% url 'nombre' %}" class="btn btn-info" role="button">Cambiar nombre</a>
+    <a href="{% url 'nombre' usuario.id %}" class="btn btn-info" role="button">Cambiar nombre</a>
 </div>
 
 <br>
 
 <div class="container">
-    <a href="{% url 'contrasena' %}" class="btn btn-info" role="button">Cambiar contrasena</a>
+    <a href="{% url 'contrasena' usuario.id %}" class="btn btn-info" role="button">Cambiar contrasena</a>
 </div>
 
 <br>
 
 <div class="container">
-    <a href="{% url 'correo' %}" class="btn btn-info" role="button">Cambiar correo</a>
+    <a href="{% url 'correo' usuario.id %}" class="btn btn-info" role="button">Cambiar correo</a>
 </div>
 
 <br>
 
 <div class="container">
-    <a href="{% url 'foto' %}" class="btn btn-info" role="button">Cambiar foto</a>
+    <a href="{% url 'foto' usuario.id %}" class="btn btn-info" role="button">Cambiar foto</a>
 </div>
 
 {% endblock %}
