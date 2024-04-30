@@ -8,4 +8,5 @@ urlpatterns = [
     path('busqueda', views.busqueda, name='busqueda'),
     path('notificaciones', views.notificaciones, name='notificaciones'),
     path('rechazar_solicitud/<str:cuenta_solicitante>/<str:cuenta_a_solicitar>', views.rechazar_solicitud, name='rechazar_solicitud'),
+    path('aceptar_solicitud/<str:cuenta_solicitante>/<str:cuenta_a_solicitar>', views.aceptar_solicitud, name='aceptar_solicitud'),
 ]

@@ -35,7 +35,7 @@
                             </td>
                             <td>{{solicitud.cuenta_solicitante.nickname}} quiere ser tu amig@</td>
                             <td>
-                                <a class="btn btn-info btn-sm " href="#" role="button" method="post"> Aceptar </a> 
+                                <a class="btn btn-info btn-sm " href="{% url 'aceptar_solicitud' solicitud.cuenta_solicitante solicitud.cuenta_a_solicitar %}" role="button"> Aceptar </a> 
                                 | 
                                 <a class="btn btn-danger btn-sm " href="{% url 'rechazar_solicitud' solicitud.cuenta_solicitante solicitud.cuenta_a_solicitar%}" role="button"> Rechazar </a>
                             </td>
