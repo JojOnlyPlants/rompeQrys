@@ -9,7 +9,7 @@ class NombreForm(forms.ModelForm):
 class ContrasenaForm(forms.ModelForm):
     class Meta:
         model = Usuario
-        fields = ['id', 'contrasena']
+        fields = ['id', 'password']
 
 class CorreoForm(forms.ModelForm):
     class Meta:

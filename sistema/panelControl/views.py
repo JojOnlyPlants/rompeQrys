@@ -6,7 +6,7 @@ from .forms import *
 
 # Esperar a sistema de login para cambiar id por request.user.id
 def panel(request):
-    usuario = Usuario.objects.get(id=0)
+    usuario = Usuario.objects.get(id=1)
     return render(request, 'panel.html', {'usuario': usuario})
 
 def nombre(request, id):
@@ -18,29 +18,34 @@ def nombre(request, id):
         return redirect('panel') # Redirige a la pagina de panel, cambiarlo por una pagina de confirmacion
     return render(request, 'nombre.html', {'formulario': formulario})
 
-#def contrasena(request, id):
-#    usuario = Usuario.objects.get(id=id) 
-#    formulario = ContrasenaForm(request.POST or None, request.FILES or None , instance=usuario)
-#    if formulario.is_valid():
-#        formulario.save()
-#        return redirect('panel') # Redirige a la pagina de panel, cambiarlo por una pagina de confirmacion
-#    return render(request, 'contrasena.html', {'formulario': formulario})
-
 def contrasena(request, id):
     usuario = Usuario.objects.get(id=id)
-    print(f'Usuario: {usuario}')  # Print the Usuario object
     if request.method == 'POST':
         password = request.POST.get('password')
         password_confirmation = request.POST.get('password_confirmation')
-        print(f'Password: {password}, Confirmation: {password_confirmation}')  # Print the password and confirmation
         if password == password_confirmation:
-            usuario.password = password
+            usuario.set_password(password)
             usuario.save()
-            print('Password updated')  # Print a message when the password is updated
             return redirect('panel')
         else:
             messages.error(request, 'Passwords do not match')
     return render(request, 'contrasena.html', {})
+
+#def contrasena(request, id):
+#    usuario = Usuario.objects.get(id=id)
+#    print(f'Usuario: {usuario}')  # Print the Usuario object
+#    if request.method == 'POST':
+#        password = request.POST.get('password')
+#        password_confirmation = request.POST.get('password_confirmation')
+#        print(f'Password: {password}, Confirmation: {password_confirmation}')  # Print the password and confirmation
+#        if password == password_confirmation:
+#            usuario.password = password
+#            usuario.save()
+#            print('Password updated')  # Print a message when the password is updated
+#            return redirect('panel')
+#        else:
+#            messages.error(request, 'Passwords do not match')
+#    return render(request, 'contrasena.html', {})
 
 def correo(request, id):
     usuario = Usuario.objects.get(id=id)

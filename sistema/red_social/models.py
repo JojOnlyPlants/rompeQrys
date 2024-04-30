@@ -1,3 +1,5 @@
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, Group, Permission
 from django.db import models
 
 # Create your models here.
@@ -24,18 +26,49 @@ class Publicacion(models.Model):
     
     def __str__(self):
         return self.texto
-    
-class Usuario(models.Model):
-    id = models.AutoField(primary_key=True, default=0, verbose_name='ID')
+
+# TODO CAMBIOS HECHOS, CAMBIE EXTENSIVAMENTE LA BASE DE DATOS, CREE UN USUARIO PERSONALIZADO QUE SOBRERESCRIBE EL USUARIO DE DJANGO
+
+class UsuarioManager(BaseUserManager):
+    use_in_migrations = True
+
+    def _create_user(self, email, password, **extra_fields):
+        if not email:
+            raise ValueError('The given email must be set')
+        email = self.normalize_email(email)
+        usuario = self.model(email=email, **extra_fields)
+        usuario.set_password(password)
+        usuario.save(using=self._db)
+        return usuario
+
+    def create_user(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(email, password, **extra_fields)
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self._create_user(email, password, **extra_fields)
+
+class Usuario(AbstractBaseUser, PermissionsMixin):
+    id = models.AutoField(primary_key=True, verbose_name='ID')
     nombre = models.CharField(max_length=50, verbose_name='Nombre')
     apellido_paterno = models.CharField(max_length=50, verbose_name='Apellido paterno')
     apellido_materno = models.CharField(max_length=50, verbose_name='Apellido materno')
     fecha_nacimiento = models.DateField(verbose_name='Fecha de nacimiento')
     genero = models.CharField(max_length=15, verbose_name='Género')
-    email = models.EmailField(verbose_name='Email')
-    contrasena = models.CharField(max_length=50, verbose_name='Contraseña')
+    email = models.EmailField(verbose_name='Email', unique=True)
+    password = models.CharField(max_length=128)
     es_administrador = models.BooleanField(default=False, verbose_name='Es administrador')
     cuenta = models.ForeignKey(Cuenta, on_delete=models.CASCADE, verbose_name='Cuenta')
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    objects = UsuarioManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['nombre', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'genero']
 
     class Meta:
         verbose_name = 'Usuario'
@@ -44,6 +77,28 @@ class Usuario(models.Model):
 
     def __str__(self):
         return self.cuenta.nickname
+    
+    groups = models.ManyToManyField(
+        Group,
+        verbose_name=_('groups'),
+        blank=True,
+        help_text=_(
+            'The groups this user belongs to. A user will get all permissions '
+            'granted to each of their groups.'
+        ),
+        related_name="usuario_groups",
+        related_query_name="user",
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        verbose_name=_('user permissions'),
+        blank=True,
+        help_text=_('Specific permissions for this user.'),
+        related_name="usuario_user_permissions",
+        related_query_name="user",
+    )
+
+    objects = UsuarioManager()
     
 class Solicitud(models.Model):
     cuenta_solicitante = models.ForeignKey(Cuenta,on_delete=models.CASCADE,verbose_name='Cuenta solicitante',related_name='cuenta_solicitante')
