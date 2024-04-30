@@ -16,9 +16,10 @@ def nombre(request, id):
     if formulario.is_valid():
         formulario.save()
         messages.success(request, 'Nombre actualizado correctamente')
-        return redirect('panel') # Redirige a la pagina de panel, cambiarlo por una pagina de confirmacion
+        return redirect('panel')
+    else:
+        messages.error(request, 'Error al actualizar el nombre')
     return render(request, 'nombre.html', {'formulario': formulario})
-
 
 # ESTE METODO FUNCIONA CREANDO UNA NUEVA INSTANCIA DE USUARIO, Y EL CAMBIO SE VE EN EL PANEL DE ADMIN DE DJANGO PERO HASHEADO,
 # NO SE PUEDE CAMBIAR AL PARECER
@@ -30,9 +31,11 @@ def contrasena(request, id):
         if password == password_confirmation:
             usuario.set_password(password)
             usuario.save()
+            messages.success(request, 'Contraseña actualizada correctamente')
             return redirect('panel')
         else:
-            return HttpResponse('Las contraseñas no coinciden')
+            messages.error(request, 'Las contraseñas no coinciden')
+            return redirect(panel)
     return render(request, 'contrasena.html', {})
 
 # ME LO DIJO COPILOT, NO SE SI CREERLE AL 100
@@ -59,7 +62,10 @@ def correo(request, id):
     formulario = CorreoForm(request.POST or None, request.FILES or None , instance=usuario)
     if formulario.is_valid():
         formulario.save()
-        return redirect('panel') # Redirige a la pagina de panel, cambiarlo por una pagina de confirmacion
+        messages.success(request, 'Correo actualizado correctamente')
+        return redirect('panel') 
+    else :
+        messages.error(request, 'Error al actualizar el correo')
     return render(request, 'correo.html', {'formulario': formulario})
 
 def foto(request, id):
@@ -67,6 +73,9 @@ def foto(request, id):
     formulario = FotoForm(request.POST or None, request.FILES or None , instance=cuenta)
     if formulario.is_valid():
         formulario.save()
-        return redirect('panel') # Redirige a la pagina de panel, cambiarlo por una pagina de confirmacion
+        messages.success(request, 'Foto actualizada correctamente')
+        return redirect('panel')
+    else:
+        messages.error(request, 'Error al actualizar la foto')
     return render(request, 'foto.html', {'formulario': formulario})
 

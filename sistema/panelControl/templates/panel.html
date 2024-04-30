@@ -2,21 +2,15 @@
 {% block titulo %} Panel {% endblock %}
 {% block contenido %}  
 
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+    {% for message in messages %}
+        swal("{{ message }}");
+    {% endfor %}
+</script>
 
 <h1>Panel de control</h1>
-
-<br>
-
-<h3> Pendiente: hacer pagina de exito </h3>
-
-<br>
 
 <div class="container">
     <a href="{% url 'nombre' usuario.id %}" class="btn btn-info" role="button">Cambiar nombre</a>
