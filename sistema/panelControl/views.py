@@ -5,8 +5,9 @@ from red_social.models import Usuario, Cuenta
 from .forms import *
 
 # Esperar a sistema de login para cambiar id por request.user.id
+# CAMBIAR LA DEFINICION ACTUAL POR request.user.id HASTA QUE SE IMPLEMENTE EL SISTEMA DE LOGIN, ESTO ES SOLO PARA PRUEBAS
 def panel(request):
-    usuario = Usuario.objects.get(id=1)
+    usuario = Usuario.objects.get(id=0)
     return render(request, 'panel.html', {'usuario': usuario})
 
 def nombre(request, id):
@@ -18,6 +19,9 @@ def nombre(request, id):
         return redirect('panel') # Redirige a la pagina de panel, cambiarlo por una pagina de confirmacion
     return render(request, 'nombre.html', {'formulario': formulario})
 
+
+# ESTE METODO FUNCIONA CREANDO UNA NUEVA INSTANCIA DE USUARIO, Y EL CAMBIO SE VE EN EL PANEL DE ADMIN DE DJANGO PERO HASHEADO,
+# NO SE PUEDE CAMBIAR AL PARECER
 def contrasena(request, id):
     usuario = Usuario.objects.get(id=id)
     if request.method == 'POST':
@@ -28,9 +32,12 @@ def contrasena(request, id):
             usuario.save()
             return redirect('panel')
         else:
-            messages.error(request, 'Passwords do not match')
+            return HttpResponse('Las contraseñas no coinciden')
     return render(request, 'contrasena.html', {})
 
+# ME LO DIJO COPILOT, NO SE SI CREERLE AL 100
+# ESTE ES UN METODO CON MENOS REFACTORIZACION (MUCHO MENOS) PARA CAMBIAR LA CONTRASEÑA, PERO NO SE VE REFLEJADO EN EL PANEL DE ADMIN DE DJANGO
+# SIN EMBARGO ESTOY CASI SEGURO QUE SI FUNCIONA
 #def contrasena(request, id):
 #    usuario = Usuario.objects.get(id=id)
 #    print(f'Usuario: {usuario}')  # Print the Usuario object
