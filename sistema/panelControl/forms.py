@@ -1,11 +1,18 @@
 from django import forms
 from red_social.models import Usuario, Cuenta
 
-class UserForm(forms.Form):
-    first_name = forms.CharField(label='Nombre', max_length=100)
-    apellido_paterno = forms.CharField(label='Apellido Paterno', max_length=100)
-    apellido_materno = forms.CharField(label='Apellido Materno', max_length=100)
-    email = forms.EmailField(label='E-mail')
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['id', 'nombre', 'apellido_paterno', 'apellido_materno', 'email']
+
+class CuentaForm(forms.ModelForm):
+    class Meta:
+        model = Cuenta
+        fields = ['foto_perfil']
+        widgets = {
+            'foto_perfil': forms.FileInput(attrs={'class': 'account-settings-fileinput'}),
+        }
 
 class NombreForm(forms.ModelForm):
     class Meta:

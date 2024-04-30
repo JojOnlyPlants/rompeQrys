@@ -1,28 +1,30 @@
 from django.contrib import messages
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from red_social.models import Usuario, Cuenta
+
 from .forms import *
 
 # Esperar a sistema de login para cambiar id por request.user.id
 # CAMBIAR LA DEFINICION ACTUAL POR request.user.id HASTA QUE SE IMPLEMENTE EL SISTEMA DE LOGIN, ESTO ES SOLO PARA PRUEBAS
-def panel(request):
-    usuario = Usuario.objects.get(id=0)
+def panel(request, id):
+    usuario = Usuario.objects.get(id=id)
+    cuenta = usuario.cuenta
     if request.method == 'POST':
-        form = UserForm(request.POST)
-        if form.is_valid():
-            usuario.first_name = form.cleaned_data['first_name']
-            usuario.apellido_paterno = form.cleaned_data['apellido_paterno']
-            usuario.apellido_materno = form.cleaned_data['apellido_materno']
-            usuario.email = form.cleaned_data['email']
-            usuario.save()
-            messages.success(request, 'Datos actualizados correctamente')
-            return redirect('panel')
-        else:
-            messages.error(request, 'Error al actualizar los datos')
-            return redirect('panel')
+        user_form = UserForm(request.POST, instance=usuario)
+        cuenta_form = CuentaForm(request.POST, request.FILES, instance=cuenta)
+        if user_form.has_changed() or cuenta_form.has_changed():
+            if user_form.is_valid() and cuenta_form.is_valid():
+                user_form.save()
+                cuenta_form.save()
+                messages.success(request, 'Datos actualizados correctamente')
+            else:
+                messages.error(request, 'Error al actualizar los datos')
+        return redirect('panel', id=usuario.id)
     else:
-        form = UserForm()
-    return render(request, 'panel.html', {'form': form})
+        user_form = UserForm(instance=usuario)
+        cuenta_form = CuentaForm(instance=cuenta)
+    return render(request, 'panel.html', {'user_form': user_form, 'cuenta_form': cuenta_form, 'cuenta': cuenta})
 
 def nombre(request, id):
     usuario = Usuario.objects.get(id=id)

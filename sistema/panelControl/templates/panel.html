@@ -17,7 +17,15 @@
   <link rel="stylesheet" type="text/css" href="{% static 'panelStyle.css' %}">
 </head>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <div class="container light-style flex-grow-1 container-p-y">
+
+    <script>
+      {% for message in messages %}
+          swal("{{ message }}");
+      {% endfor %}
+    </script>
 
     <h4 class="font-weight-bold py-3 mb-4">
       Panel de usuario
@@ -35,44 +43,40 @@
           <div class="tab-content">
             <div class="tab-pane fade active show" id="account-general">
 
-              <div class="card-body media align-items-center">
-                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="d-block ui-w-80" style="width: 70px;">
-                <div class="media-body ml-4">
-                  <label class="btn btn-outline-primary">
-                    Nueva foto
-                    <input type="file" class="account-settings-fileinput">
-                  </label> &nbsp;
-                  <button type="button" class="btn btn-default md-btn-flat">Resetear</button>
-                  <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
-                </div>
-              </div>
-              <hr class="border-light m-0">
-
               <!-- Formulario para cambiar datos menos la contrasena -->
-              <form method="post">
+              <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
+                <div class="card-body media align-items-center">
+                  <img src="{{ cuenta.foto_perfil.url }}" alt="" class="d-block ui-w-80" style="width: 70px;">
+                  <div class="media-body ml-4">
+                    <label class="btn btn-outline-primary">
+                      Nueva foto
+                      {{ cuenta_form.foto_perfil }}
+                    </label>
+                    <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                  </div>
+                </div>
                 <div class="card-body">
                   <div class="form-group">
-                    {{ form.first_name.label_tag }}
-                    {{ form.first_name }}
+                    {{ user_form.nombre.label_tag }}
+                    {{ user_form.nombre }}
                   </div>
                   <div class="form-group">
-                    {{ form.apellido_paterno.label_tag }}
-                    {{ form.apellido_paterno }}
+                    {{ user_form.apellido_paterno.label_tag }}
+                    {{ user_form.apellido_paterno }}
                   </div>
                   <div class="form-group">
-                    {{ form.apellido_materno.label_tag }}
-                    {{ form.apellido_materno }}
+                    {{ user_form.apellido_materno.label_tag }}
+                    {{ user_form.apellido_materno }}
                   </div>
                   <div class="form-group">
-                    {{ form.email.label_tag }}
-                    {{ form.email }}
+                    {{ user_form.email.label_tag }}
+                    {{ user_form.email }}
                   </div>
-                </div>
-                <div class="text-right mt-3">
-                  <button type="submit" class="btn btn-primary">Guardar cambios</button>&nbsp;
-                  <button type="button" class="btn btn-default">Cancelar</button>
-                </div>
+                  <div class="text-right mt-3">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>&nbsp;
+                    <button type="button" class="btn btn-default">Cancelar</button>
+                  </div>
               </form>
 
             </div>
