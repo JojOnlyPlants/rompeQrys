@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from red_social.models import Usuario, Cuenta
 from .forms import *
 
@@ -8,7 +7,22 @@ from .forms import *
 # CAMBIAR LA DEFINICION ACTUAL POR request.user.id HASTA QUE SE IMPLEMENTE EL SISTEMA DE LOGIN, ESTO ES SOLO PARA PRUEBAS
 def panel(request):
     usuario = Usuario.objects.get(id=0)
-    return render(request, 'panel.html', {'usuario': usuario})
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            usuario.first_name = form.cleaned_data['first_name']
+            usuario.apellido_paterno = form.cleaned_data['apellido_paterno']
+            usuario.apellido_materno = form.cleaned_data['apellido_materno']
+            usuario.email = form.cleaned_data['email']
+            usuario.save()
+            messages.success(request, 'Datos actualizados correctamente')
+            return redirect('panel')
+        else:
+            messages.error(request, 'Error al actualizar los datos')
+            return redirect('panel')
+    else:
+        form = UserForm()
+    return render(request, 'panel.html', {'form': form})
 
 def nombre(request, id):
     usuario = Usuario.objects.get(id=id)
@@ -36,7 +50,7 @@ def contrasena(request, id):
         else:
             messages.error(request, 'Las contraseñas no coinciden')
             return redirect(panel)
-    return render(request, 'contrasena.html', {})
+    return render(request, 'contrasena.html')
 
 # ME LO DIJO COPILOT, NO SE SI CREERLE AL 100
 # ESTE ES UN METODO CON MENOS REFACTORIZACION (MUCHO MENOS) PARA CAMBIAR LA CONTRASEÑA, PERO NO SE VE REFLEJADO EN EL PANEL DE ADMIN DE DJANGO

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block titulo %} Panel {% endblock %}
+{% block contenido %}  
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+    {% for message in messages %}
+        swal("{{ message }}");
+    {% endfor %}
+</script>
+
+<h1>Panel de control</h1>
+
+<div class="container">
+    <a href="{% url 'nombre' usuario.id %}" class="btn btn-info" role="button">Cambiar nombre</a>
+</div>
+
+<br>
+
+<div class="container">
+    <a href="{% url 'contrasena' usuario.id %}" class="btn btn-info" role="button">Cambiar contrasena</a>
+</div>
+
+<br>
+
+<div class="container">
+    <a href="{% url 'correo' usuario.id %}" class="btn btn-info" role="button">Cambiar correo</a>
+</div>
+
+<br>
+
+<div class="container">
+    <a href="{% url 'foto' usuario.id %}" class="btn btn-info" role="button">Cambiar foto</a>
+</div>
+
+{% endblock %}
