@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 @receiver(post_save, sender=User)
 def ensure_profile_exists(sender, instance, **kwargs):
     if kwargs.get('created', False):
-        Cuenta.objects.get_or_create(user=instance)
+        Cuenta.objects.get_or_create(usuario=instance)
         print("Se acaba de crear un usuario y su Cuenta enlazada")
 
 def custom_upload_to(instance, filename):
