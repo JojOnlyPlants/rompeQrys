@@ -12,3 +12,9 @@ class PaginaBusquedaView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name, {'titulo': 'Busqueda'})
+
+class PaginaPerfilView(TemplateView):
+    template_name = "paginas/perfil.html"
+     
+    def get(self, request, *args, **kwargs):
+         return render(request, self.template_name, {'titulo': 'perfil'})
