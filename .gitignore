@@ -5,6 +5,8 @@
 **/sistema/media
 **/sistema/red_social/migrations
 
+**/migrations/
+
 
 # Django
 *.egg-info

@@ -9,6 +9,10 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django import forms
 from .models import Cuenta
+from django.shortcuts import render
+
+def login_view(request):
+    return render(request, 'registro/login.html')
 
 # Create your views here.
 class SignUpView(CreateView):
