@@ -3,24 +3,10 @@
 {% block titulo%}Inicio{% endblock%}
 
 {% block contenido%}
-    <div class="row align-items-md-stretch">
-        <div class="col-md-6">
-            <div
-                class="h-100 p-5 text-black  border rounded-3"
-            >
-                <h2>Bienvenidos a la red social</h2>
-                <p>
-                    Empieza a compartir tus experiencias con tus amigos
-                </p>
-                <a
-                    class="btn btn-outline-primary"
-                    type="button"
-                    href="{%url 'bandeja_solicitudes'%}"
-                >
-                    Bandeja de Solicitudes
-                </a>
-            </div>
-        </div>
+<div class="container">
+    <div style="padding-top:50px; text-align:center;">
+      <h1>{{titulo}}</h1>
+      <p class="lead">Bienvenido al nuestra red social</p>
     </div>
-    
+</div>
 {% endblock%}

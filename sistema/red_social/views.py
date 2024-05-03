@@ -1,14 +1,14 @@
 from django.shortcuts import render
+from django.views.generic.base import TemplateView
 
-# Create your views here.
-def inicio(request):
-    return render(request,"paginas/inicio.html")
+class PaginaInicioView(TemplateView):
+    template_name = "paginas/inicio.html"
 
-def bandeja_solicitudes(request):
-    return render(request, "paginas/bandeja_solicitudes.html")
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'titulo': 'Inicio'})
 
-def perfil(request):
-    return render(request, "paginas/perfil.html")
+class PaginaBusquedaView(TemplateView):
+    template_name = "paginas/busqueda.html"
 
-def busqueda(request):
-    return render(request, "paginas/busqueda.html")
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'titulo': 'Busqueda'})

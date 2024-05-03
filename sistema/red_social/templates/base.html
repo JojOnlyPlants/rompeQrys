@@ -1,9 +1,9 @@
-{% load static %}
 <!doctype html>
 <html lang="en">
     <head>
         <title>{% block titulo %}  {% endblock %}</title>
         <!-- Required meta tags -->
+        {% load static %}
         <meta charset="utf-8" />
         <meta 
             name="viewport"
@@ -22,17 +22,52 @@
         <header>
             <!-- place navbar here -->
             <nav class="navbar navbar-expand navbar-light bg-light">
-                <div class="nav navbar-nav">
-                    <a class="nav-item nav-link active" href="{% url 'inicio'%}" aria-current="page"> Home </a>
-                    <a class="nav-item nav-link active" href="{%url 'bandeja_solicitudes'%}" aria-current="page"> Solicitudes de Amistad </a>
-                    <a class="nav-item nav-link active" href="{%url 'busqueda'%}" aria-current="page"> Busqueda </a>
-                    <a class="nav-item nav-link active" href="#" aria-current="page"> Notificaciones </a>
-                    <a class="nav-item nav-link active" href="{%url 'perfil'%}" aria-current="page"> Perfil </a>
+                <div class="container">
+                    <a class="navbar-brand" href="{% url 'inicio' %}"><h3>Red Social</h3></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ned" aria-controls="ned" aria-expanded="false">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="ned">    
+                        <ul class="nav navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'inicio'%}" aria-current="page"> Home </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{%url 'busqueda'%}" aria-current="page"> Busqueda </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{%url 'publicaciones'%}" aria-current="page"> publicaciones </a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav">
+                            {%if not request.user.is_authenticated%}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Acceder</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'signup' %}">Registro</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{%url 'bandeja_solicitudes'%}" aria-current="page"> Solicitudes de Amistad </a>
+                                  </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="{% url 'perfil' %}">Configuración de perfil</a>
+                                </li>
+                                <form id="logout-form" method="post" action="{% url 'logout' %}">
+                                  {% csrf_token %}
+                                  <button type="submit" class="btn nav-link" style="background: none; border: none;">Salir</button>
+                                </form>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
             </nav>
-            
         </header>
-        <main>
+
+        <main role="main">
             <div class="container">
                 <div class="row">
                     <div class="col-12">

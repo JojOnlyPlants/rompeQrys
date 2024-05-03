@@ -1,9 +1,7 @@
 from django.urls import path
-from . import views
+from .views import PaginaBusquedaView, PaginaInicioView
 
 urlpatterns = [
-    path('', views.inicio, name='inicio'),
-    path('bandeja_solicitudes', views.bandeja_solicitudes, name='bandeja_solicitudes'),
-    path('perfil', views.perfil, name='perfil'),
-    path('busqueda', views.busqueda, name='busqueda'),
+    path('', PaginaInicioView.as_view(), name='inicio'),
+    path('busqueda/', PaginaBusquedaView.as_view(), name='busqueda'),
 ]
