@@ -20,7 +20,7 @@ class UserCreationFormWithEmail(UserCreationForm):
 class CuentaForm(forms.ModelForm):
     class Meta:
         model = Cuenta
-        GENERO = (('Masculino','Masculino'),('Femenino','Femenino'),('Otro','Helicoptero Apache'))
+        GENERO = (('Masculino','Masculino'),('Femenino','Femenino'),('Otro','Otro'))
         fields = ['nickname', 'foto_perfil', 'nombre', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'genero']
         widgets = {
             'nickname': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nickname'}),
@@ -29,7 +29,10 @@ class CuentaForm(forms.ModelForm):
             'apellido_paterno': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Apellido Paterno'}),
             'apellido_materno': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Apellido Materno'}),
             'fecha_nacimiento': forms.DateInput(attrs={'class':'datepicker form-control'}),
-            'genero': forms.ChoiceField(choices=GENERO, widget=forms.Select(attrs={'class':'form-control'}))
+            'genero': forms.Select(attrs={'class':'form-control'})
+        }
+        choices = {
+            'genero': GENERO
         }
 
 class EmailForm(forms.ModelForm):

@@ -12,13 +12,13 @@ from .models import Cuenta
 from django.shortcuts import render
 
 def login_view(request):
-    return render(request, 'registro/login.html')
+    return render(request, 'registration/login.html')
 
 # Create your views here.
 class SignUpView(CreateView):
     form_class = UserCreationFormWithEmail
     success_url = reverse_lazy('login')
-    template_name = 'registro/signup.html'
+    template_name = 'registration/signup.html'
 
     def get_success_url(self):
         return reverse_lazy('login') + '?register'
@@ -40,10 +40,10 @@ class SignUpView(CreateView):
 class CuentaUpdate(UpdateView):
     form_class = CuentaForm
     success_url = reverse_lazy('cuenta')
-    template_name = 'registro/cuenta_form.html'
+    template_name = 'registration/cuenta_form.html'
     
     def get_object(self):
-        profile, created = Cuenta.objects.get_or_create(user=self.request.user)
+        profile, created = Cuenta.objects.get_or_create(usuario=self.request.user)
         
         return profile
     
@@ -52,7 +52,7 @@ class CuentaUpdate(UpdateView):
 class EmailUpdate(UpdateView):
     form_class = EmailForm
     success_url = reverse_lazy('profile')
-    template_name = 'registro/cuenta_email_form.html'
+    template_name = 'registration/cuenta_email_form.html'
 
     def get_object(self):
         # recuperar el objeto que se va editar
