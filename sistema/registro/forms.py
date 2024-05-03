@@ -28,7 +28,7 @@ class CuentaForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nombre'}),
             'apellido_paterno': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Apellido Paterno'}),
             'apellido_materno': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Apellido Materno'}),
-            'fecha_nacimiento': forms.DateField(attrs={'class':'datepicker form-control'}),
+            'fecha_nacimiento': forms.DateInput(attrs={'class':'datepicker form-control'}),
             'genero': forms.ChoiceField(choices=GENERO, widget=forms.Select(attrs={'class':'form-control'}))
         }
 
