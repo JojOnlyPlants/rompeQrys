@@ -1,4 +1,4 @@
-{% extends 'red_social/base.html' %}
+{% extends 'paginas/base.html' %}
 {% load static %}
 {% block title %}Perfil{% endblock %}
 {% block content %}
@@ -11,17 +11,17 @@
           <div class="row">
             <!-- Previa del avatar -->
             <!-- Asi accedo a un perfil de usuario {{request.user.profile.link}} -->
-            <div class="col-md-2">
+            <div class="col-md-2 text-center">
               {% if request.user.cuenta.foto_perfil %}
-                <img src="{{request.user.cuenta.foto_perfil.url}}" class="img-fluid">
-                <p class="mt-1">¿Borrar? <input type="checkbox" id="avatar-clear" name="avatar-clear" /></p>
-                {% else %}
-                <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid">  
+                  <img src="{{request.user.cuenta.foto_perfil.url}}" class="img-fluid">
+                  <!-- <p class="mt-1"> Resetear <input type="checkbox" id="avatar-clear" name="avatar-clear" /></p> -->
+              {% else %}
+                  <img src="{% static 'registro/img/no-avatar.jpg' %}" class="img-fluid">  
               {% endif %}
             </div>
             <!-- Formulario -->
             <div class="col-md-10">
-              <h3>Cuenta</h3>
+              <h3>Panel de control</h3>
               <input type="file" name="foto_perfil" class="form-control-file mt-3" id="id_avatar">
               {{ form.nickname }}
               {{ form.nombre }}
