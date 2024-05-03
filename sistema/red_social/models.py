@@ -1,9 +1,30 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+
+@receiver(post_save, sender=User)
+def ensure_profile_exists(sender, instance, **kwargs):
+    if kwargs.get('created', False):
+        Profile.objects.get_or_create(user=instance)
+        print("Se acaba de crear un usuario y su Cuenta enlazada")
+
+def custom_upload_to(instance, filename):
+    old_instance = Profile.objects.get(pk=instance.pk)
+    old_instance.avatar.delete()
+    return 'fotos_perfil/' + filename
 
 # Create your models here.
 class Cuenta(models.Model):
-    nickname = models.CharField(max_length=50,primary_key=True,verbose_name='Nickname')
-    foto_perfil = models.ImageField(upload_to='fotos_perfil',verbose_name='Foto de perfil')
+    GENERO = (('Masculino','Masculino'),('Femenino','Femenino'),('Otro','Helicoptero Apache'))
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Usuario')
+    nickname = models.CharField(max_length=50, verbose_name='Nickname', null=True, blank=True)
+    foto_perfil = models.ImageField(upload_to='fotos_perfil',verbose_name='Foto de perfil', null=True, blank=True)
+    nombre = models.CharField(max_length=50, verbose_name='Nombre', null=True, blank=True)
+    apellido_paterno = models.CharField(max_length=50, verbose_name='Apellido paterno', null=True, blank=True)
+    apellido_materno = models.CharField(max_length=50, verbose_name='Apellido materno', null=True, blank=True)
+    fecha_nacimiento = models.DateField(verbose_name='Fecha de nacimiento', null=True, blank=True)
+    genero = models.CharField(max_length=25, verbose_name='Género', choices=GENERO, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Cuenta'
@@ -16,34 +37,17 @@ class Cuenta(models.Model):
 class Publicacion(models.Model):
     cuenta = models.ForeignKey(Cuenta,on_delete=models.CASCADE,verbose_name='Cuenta')
     texto = models.TextField(max_length=1000,verbose_name='Texto')
-    imagen = models.ImageField(upload_to='imagenes',verbose_name='Imagen')
+    imagen = models.ImageField(upload_to='imagenes',verbose_name='Imagen', null=True, blank=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    fecha_edicion = models.DateTimeField(auto_now=True, verbose_name="Fecha de edición")
 
     class Meta:
         verbose_name = 'Publicación'
         verbose_name_plural = 'Publicaciones'
+        ordering = ['-fecha_creacion']
     
     def __str__(self):
         return self.texto
-    
-class Usuario(models.Model):
-    id = models.AutoField(primary_key=True, verbose_name='ID')
-    nombre = models.CharField(max_length=50, verbose_name='Nombre')
-    apellido_paterno = models.CharField(max_length=50, verbose_name='Apellido paterno')
-    apellido_materno = models.CharField(max_length=50, verbose_name='Apellido materno')
-    fecha_nacimiento = models.DateField(verbose_name='Fecha de nacimiento')
-    genero = models.CharField(max_length=15, verbose_name='Género')
-    email = models.EmailField(verbose_name='Email')
-    contrasena = models.CharField(max_length=50, verbose_name='Contraseña')
-    es_administrador = models.BooleanField(default=False, verbose_name='Es administrador')
-    cuenta = models.ForeignKey(Cuenta, on_delete=models.CASCADE, verbose_name='Cuenta')
-
-    class Meta:
-        verbose_name = 'Usuario'
-        verbose_name_plural = 'Usuarios'
-        ordering = ['cuenta']
-
-    def _str_(self):
-        return self.cuenta.nickname
     
 class Solicitud(models.Model):
     cuenta_solicitante = models.ForeignKey(Cuenta,on_delete=models.CASCADE,verbose_name='Cuenta solicitante',related_name='cuenta_solicitante')
