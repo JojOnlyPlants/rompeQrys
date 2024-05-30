@@ -1,0 +1,100 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+
+<!-- contenido principal -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- sidebar izquierdo -->
+        <div class="col-md-3">
+            <div class="left-sidebar">
+                <div class="links-importantes">
+                    <a href="#"><img src="{% static 'red_social/imagenes/news.png' %}" alt=""> Novedades</a>
+                    <a href="#"><img src="{% static 'red_social/imagenes/friends.png' %}" alt=""> Amigos</a>
+                    <a href="#">Ver más</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- contenido principal -->
+        <div class="col-md-9">
+            <div class="main-content">
+
+                <!-- story gallery -->
+                <div class="story-gallery d-flex justify-content-between mb-4">
+                    <div class="story text-center">
+                        <img src="{% static 'red_social/imagenes/upload.png' %}" class="img-fluid">
+                        <p>Postear Story</p>
+                    </div>
+
+                    <div class="story text-center">
+                        <img src="{% static 'red_social/imagenes/member-1.png' %}" class="img-fluid">
+                        <p>Mia</p>
+                    </div>
+
+                    <div class="story text-center">
+                        <img src="{% static 'red_social/imagenes/member-2.png' %}" class="img-fluid">
+                        <p>Jordie</p>
+                    </div>
+
+                    <div class="story text-center">
+                        <img src="{% static 'red_social/imagenes/member-3.png' %}" class="img-fluid">
+                        <p>Jessica</p>
+                    </div>
+
+                    <div class="story text-center">
+                        <img src="{% static 'red_social/imagenes/member-4.png' %}" class="img-fluid">
+                        <p>Angela</p>
+                    </div>
+                </div>
+
+                <!-- crear post -->
+                <div class="escribe-contenedor-post mb-4">
+                    <div class="perfil-usuario d-flex align-items-center mb-3">
+                        {% if request.user.profile.avatar %}
+                        <img src="{{ request.user.profile.avatar.url }}" alt="{{ request.user.username }}'s profile picture" class="rounded-circle img-thumbnail" style="width: 50px;">
+                        {% else %}
+                        <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid rounded-circle img-thumbnail" style="width: 50px;">
+                        {% endif %}
+                        <div class="ms-2">
+                            <p>{{ request.user.username }}</p>
+                            <small>Publico<i class="fa-solid fa-caret-down"></i></small>
+                        </div>
+                    </div>
+
+                    <div class="crear-post">
+                        <form method="post" action="{% url 'page_create' %}" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Título:</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                                <div class="invalid-feedback">
+                                    Por favor, introduce un título.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="content" class="form-label">Contenido:</label>
+                                <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+                                <div class="invalid-feedback">
+                                    Por favor, introduce el contenido.
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Crear página</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- post container -->
+                <div class="post-container">
+                    <!-- Aquí se agregarán los posts -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
