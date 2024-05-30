@@ -1,0 +1,25 @@
+{% extends 'red_social/base.html'%}
+{%load static %}
+{% block titulo %}Publicaciones{% endblock %}
+{% block contenido %}
+{%include 'paginas/incorpora/pagina_menu.html'%}
+<div class="container mb-4">
+    {% for publicacion in lista_publicaciones %}
+        <div class="row mt-3">
+          <div class="col-md-9 mx-auto">
+            <h2 class="mb-4">{{publicacion.cuenta.nickname}}</h2>
+            <div>
+              <p>{{publicacion.contenido|striptags|safe|truncatechars:"200"}}</p>
+              <p><a href="{% url 'detalle_publicacion' publicacion.id publicacion.cuenta.nickname|slugify %}">Leer más</a>
+             
+                  | <a href="{% url 'editar_publicacion' publicacion.id %}">Editar</a>
+                  | <a href="{% url 'eliminar_publicacion' publicacion.id %}">Borrar</a>
+                
+              </p>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'red_social/base.html' %}
+{% load static %}
+{% block title %}{{cuenta.usuario}}{% endblock %}
+{% block content %}
+<main role="main">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-9 mx-auto mb-5">
+        <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+          <div class="row">
+            <!-- Avatar -->
+            <div class="col-md-2">
+              {% if cuenta.foto_perfil %}
+                <img src="{{cuenta.foto_perfil.url}}" class="img-fluid">
+              {% else %}
+                <img src="{% static 'registro/img/no-avatar.jpg' %}" class="img-fluid">
+              {% endif %}
+              {% if request.user != cuenta.usuario %}
+              <a href="" class="btn btn-primary btn-sm btn-block mt-3">
+                Enviar mensaje
+              </a>
+            {% endif %}
+            </div>
+            <!-- Campos -->
+            <div class="col-md-10">
+              <h3>{{cuenta.usuario}}</h3>
+              {% if cuenta.nickname %}<p>{{cuenta.nickname}}</p>{% endif %}
+              {% if cuenta.fecha_nacimiento %}<p><{{cuenta.fecha_nacimiento}}/p>{% endif %}
+              {% if cuenta.genero %}<p>{{cuenta.genero}}</p>{% endif %}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

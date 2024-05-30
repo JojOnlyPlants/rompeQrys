@@ -1,0 +1,21 @@
+{% extends 'red_social/base.html'%}
+{%load static %}
+{% block titulo %}Publicacion{% endblock %}
+{% block contenido %}
+{%include 'paginas/incorpora/pagina_menu.html'%}
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-9 mx-auto">
+            <h2 class="section-heading mb-4">{{publicacion.cuenta}}</h2>
+            <div>
+            {{publicacion.contenido|safe}}
+            {{publicacion.fecha_creacion|safe}}
+            <div>
+            <img class="img-fluid" src="{{publicacion.imagen.url|safe}}">
+            </div>
+                <p><a href="{% url 'editar_publicacion' publicacion.id %}">Editar</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
