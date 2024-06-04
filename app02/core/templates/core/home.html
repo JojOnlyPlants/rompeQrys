@@ -1,0 +1,110 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HippoChat</title>
+  <link href="{% static 'red_social/css/styles.css' %}" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/0f01a28064.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="container">
+      <!-- sidebar izquierdo -->
+      <div class="left-sidebar">
+          <div class="links-importantes">
+              <a href="#"><img src="{% static 'red_social/imagenes/news.png' %}" alt=""> Novedades</a>
+              <a href="#"><img src="{% static 'red_social/imagenes/friends.png' %}" alt=""> Amigos</a>
+              <a href="#">Ver más</a>
+          </div>
+      </div>
+      
+
+
+      <!-- contenido principal -->
+      <div class="main-content">
+
+          <div class="story-gallery">
+              <div class="story story1">
+                  <img src="{% static 'red_social/imagenes/upload.png' %}">
+                  <p>Postear Story</p>
+              </div>
+
+              <div class="story story2">
+                  <img src="{% static 'red_social/imagenes/member-1.png' %}">
+                  <p>Mia </p>
+              </div>
+
+              <div class="story story3">
+                  <img src="{% static 'red_social/imagenes/member-2.png' %}">
+                  <p>Jordie</p>
+              </div>
+
+              <div class="story story4">
+                  <img src="{% static 'red_social/imagenes/member-3.png' %}">
+                  <p>Jessica</p>
+              </div>
+
+              <div class="story story5">
+                  <img src="{% static 'red_social/imagenes/member-4.png' %}">
+                  <p>Angela</p>
+              </div>
+          </div>
+
+          <div class="escribe-contenedor-post">
+                
+
+            <div class="perfil-usuario">
+                {% if request.user.profile.avatar %}
+                    <img src="{{ request.user.profile.avatar.url }}" alt="{{ request.user.username }}'s profile picture" class="rounded-circle img-thumbnail" style="width: 50px;">
+                {% else %}
+                    <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid rounded-circle img-thumbnail" style="width: 50px;">
+                {% endif %}
+                <div>
+                    <p>{{ request.user.username }}</p>
+                    <small>Publico<i class="fa-solid fa-caret-down"></i></small>
+                </div>
+            </div>
+
+            <div class="crear-post">
+                <form method="post" action="{% url 'page_create' %}" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Título:</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                        <div class="invalid-feedback">
+                            Por favor, introduce un título.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Contenido:</label>
+                        <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+                        <div class="invalid-feedback">
+                            Por favor, introduce el contenido.
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Crear página</button>
+                </form>
+            </div>
+              
+              
+          </div>
+
+
+          <div class="post-container">
+                
+          </div>
+
+
+      </div>
+  </div>
+
+</body>
+</html>
+{% endblock %}
