@@ -53,3 +53,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Añade esta línea a tu archivo .gitignore
+entorno-virtual/

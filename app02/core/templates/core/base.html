@@ -18,37 +18,34 @@
       <!-- Navegación -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-          <a class="navbar-brand" href="{% url 'home' %}"> <img src="{% static 'red_social/imagenes/hippochat-logo.png' %}" class="logo"></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ned" aria-controls="ned" aria-expanded="false">
+          <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'core/imagenes/hippochat-logo.png' %}" alt="Hippochat Logo" class="logo">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="ned">
+          <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
-
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'home' %}">Inicio</a>
               </li>
-
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'pages' %}">Feed</a>
-            </li>
-
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'profiles:list' %}">Perfiles</a>
-            </li>
-            {% if request.user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'friendship:friendrequest_list' %}">Solicitudes de Amistad</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'friendship:friend_list' %}">Amigos</a>
-            </li>
-            {% endif %}
-
-
+              </li>
+              {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'friendship:friendrequest_list' %}">Solicitudes de Amistad</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'friendship:friend_list' %}">Amigos</a>
+              </li>
+              {% endif %}
             </ul>
-            <ul class="navbar-nav">
-              {%if not request.user.is_authenticated%}
+            <ul class="navbar-nav ml-auto">
+              {% if not request.user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'login' %}">Acceder</a>
               </li>
@@ -60,33 +57,31 @@
                 <a class="nav-link" href="{% url 'messenger:list' %}">Mensajes</a>
               </li>
               <li class="nav-item">
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'profile' %}">Perfil</a>
-                </li>
+                <a class="nav-link" href="{% url 'profile' %}">Perfil</a>
+              </li>
+              <li class="nav-item">
                 <form id="logout-form" method="post" action="{% url 'logout' %}">
                   {% csrf_token %}
-                  <button type="submit">Salir</button>
+                  <button type="submit" class="btn btn-link nav-link">Salir</button>
                 </form>
               </li>
               {% endif %}
             </ul>
-
-            {% if user.is_authenticated %}
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                  {% if user.profile.avatar %}
-                    <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}'s profile picture" class="rounded-circle img-thumbnail" style="width: 50px;">
-                  {% else %}
-                    <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid rounded-circle img-thumbnail" style="width: 50px;">
-                  {% endif %}
-                </li>
-              </ul>
+            {% if request.user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                {% if request.user.profile.avatar %}
+                  <img src="{{ request.user.profile.avatar.url }}" alt="{{ request.user.username }}'s profile picture" class="rounded-circle img-thumbnail" style="width: 50px;">
+                {% else %}
+                  <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid rounded-circle img-thumbnail" style="width: 50px;">
+                {% endif %}
+              </li>
+            </ul>
             {% endif %}
-
-
           </div>
         </div>
       </nav>
+      
       <!-- Contenido -->
       {% block content %}{% endblock %}
       <!-- Javascript -->
