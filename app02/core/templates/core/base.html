@@ -36,6 +36,16 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'profiles:list' %}">Perfiles</a>
             </li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'friendship:friendrequest_list' %}">Solicitudes de Amistad</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'friendship:friend_list' %}">Amigos</a>
+            </li>
+            {% endif %}
+
+
             </ul>
             <ul class="navbar-nav">
               {%if not request.user.is_authenticated%}

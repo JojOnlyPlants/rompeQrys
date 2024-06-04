@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Solicitudes{% endblock %}
+{% block content %}
+
+<div class="card">
+    <div class="card-header">Solicitudes de amistad.</div>
+    <div class="card-body">
+        <h4 class="card-title">Solicitudes</h4>
+        <div
+            class="table-responsive"
+        >
+            <table
+                class="table table-primary"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Mensaje</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if request.user.is_authenticated %}
+                    {% for rq in friendrequest_list %}
+                    {% if rq.to_user.user == request.user%}
+                    
+                    <tr class="">
+                        {% if rq.to_user.avatar %}
+                        <td><img
+                            src="{{ rq.from_user.avatar.url }}"
+                            class="img-fluid rounded-circle"
+                            alt=""
+                            width="75"
+                            height="75"
+                        />
+                        {% else %}
+                        <td><img
+                            src="{% static 'registration/img/no-avatar.jpg' %}"
+                            class="img-fluid rounded-circle"
+                            alt=""
+                            width="75"
+                            height="75"
+                        />
+                        </td>
+                        {% endif %}
+                        <td>{{rq.from_user.user}} Quiere ser tu amigo. </td>
+                        <td>
+                            <a class="btn btn-info btn-sm " href="{% url 'friendship:accept_request' rq.pk %}" role="button"> Aceptar </a> 
+                            | 
+                            <a class="btn btn-danger btn-sm " href="{% url 'friendship:decline_request' rq.pk %}" role="button"> Rechazar </a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>
+
+
+{% endblock %}

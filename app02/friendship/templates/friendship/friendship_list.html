@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Amistades{% endblock %}
+{% block content %}
+
+<div class="card">
+    <div class="card-header">Lista de Amigos.</div>
+    <div class="card-body">
+        <h4 class="card-title">Amigos</h4>
+        <div
+            class="table-responsive"
+        >
+            <table
+                class="table table-primary"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Mensaje</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if request.user.is_authenticated%}
+                    {% for friendship in friend_list %}
+                    {% if friendship.user1.user == request.user %}
+                    <tr class="">
+                        {% if friendship.user2.avatar %}
+                        <td><img
+                            src="{{ friendship.user2.avatar.url }}"
+                            class="img-fluid rounded-circle"
+                            alt=""
+                            width="75"
+                            height="75"
+                        />
+                        {% else %}
+                        <td><img
+                            src="{% static 'registration/img/no-avatar.jpg' %}"
+                            class="img-fluid rounded-circle"
+                            alt=""
+                            width="75"
+                            height="75"
+                        />
+                        </td>
+                        {% endif %}
+                        </td>
+                        <td>{{friendship.user2.user}} Es tu amigo</td>
+                        <td>
+                            {% if request.user != friendship.user2.user %}
+                            <a href="{% url 'messenger:start' friendship.user2.user.username %}" class="btn btn-info btn-sm"> Enviar mensaje </a>
+                            {% endif %}
+                            | 
+                            <a class="btn btn-danger btn-sm " href="{% url 'friendship:delete_friend' friendship.pk %}" role="button"> Eliminar </a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>
+
+
+{% endblock %}

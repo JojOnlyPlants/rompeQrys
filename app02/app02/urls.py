@@ -3,6 +3,7 @@ from django.urls import path, include
 from pages.views import feed  # Asegúrate de importar la vista 'feed'
 from profiles.urls import profiles_patterns
 from messenger.urls import messenger_patterns
+from friendship.urls import friendship_patterns
 
 from django.conf import settings
 urlpatterns = [
@@ -18,6 +19,8 @@ urlpatterns = [
     path('profiles/', include(profiles_patterns)),
     # Paths de Messenger
     path('messenger/', include(messenger_patterns)),
+    # Paths de Friendship
+    path('friendship/', include(friendship_patterns)),
 ]
 
 if settings.DEBUG:

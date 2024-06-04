@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'messenger',
     'profiles',
     'pages.apps.PagesConfig',
-    'ckeditor'
+    'ckeditor',
+    'friendship',
 ]
 
 MIDDLEWARE = [
