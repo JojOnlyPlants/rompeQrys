@@ -34,3 +34,10 @@ def delete_friend(request, id):
     friendship = Friendship.objects.get(id=id)
     friendship.delete_friend()
     return redirect('friendship:friend_list')
+
+
+def send_request(request, id):
+    from_user = Profile.objects.get(user=request.user)
+    to_user = Profile.objects.get(id=id)
+    FriendRequest.objects.create(from_user=from_user, to_user=to_user)
+    return redirect('profiles:detail', to_user.user.username)

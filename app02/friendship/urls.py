@@ -10,4 +10,5 @@ friendship_patterns = ([
     path('accept_request/<int:id>/',views.accept_request, name='accept_request'),
     path('decline_request/<int:id>/',views.decline_request, name='decline_request'),
     path('delete_friend/<int:id>/',views.delete_friend, name='delete_friend'),
+    path('send_request/<int:id>/',views.send_request, name='send_request'),
 ], "friendship")
